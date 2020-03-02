@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Spotify Search</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="no_photo_url">https://uwosh.edu/facilities/wp-content/uploads/sites/105/2018/09/no-photo.png</string>
+
+    <string name="no_genre">N/A</string>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isloading"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="host"
+            type="com.example.spotifysearch.view.auth.AuthActivity" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/dialog_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:loadWebUrl="@{host.url}"
+            android:webViewClient="@{host.webViewClient()}" />
+
+
+        <LinearLayout
+            android:id="@+id/loadingview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{isloading ? View.VISIBLE : View.GONE}">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@color/mainThemeGreen"
+                app:indicatorName="LineScaleIndicator" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Wait"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_webview_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="@{(view)-> host.handleOnclick(view)}"
+            android:src="@drawable/ic_cancel" />
+    </RelativeLayout>
+</layout>
