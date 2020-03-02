@@ -1,13 +1,11 @@
 package com.example.spotifysearch.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -22,17 +20,10 @@ import com.example.spotifysearch.model.item.Artist;
 import com.example.spotifysearch.model.item.BaseItem;
 import com.example.spotifysearch.model.item.Track;
 
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
-
 
 public class SearchItemDataAdapter extends ListAdapter<BaseItem, RecyclerView.ViewHolder> {
 
-    MutableLiveData<BaseItem> itemLiveData = new MutableLiveData<>();
-    MutableLiveData<ImageView> imageViewLiveData = new MutableLiveData<>();
-    MediatorLiveData clickedLiveData = new MediatorLiveData();
-    PublishSubject<BaseItem> baseItemObservable = PublishSubject.create();
-    PublishSubject<ImageView> imageViewObservable = PublishSubject.create();
+    private MutableLiveData<BaseItem> selectedItem = new MutableLiveData<>();
 
 
     public SearchItemDataAdapter() {
@@ -76,52 +67,33 @@ public class SearchItemDataAdapter extends ListAdapter<BaseItem, RecyclerView.Vi
 
 
         BaseItem item = getItem(position);
-        ImageView sharedImage = null;
         switch (holder.getItemViewType()) {
 
             case 0:
                 ((AlbumViewHolder) holder).albumRecyclerItemBinding.setItem((Album) item);
-                sharedImage = ((AlbumViewHolder) holder).albumRecyclerItemBinding.img;
                 break;
 
             case 1:
                 ((ArtistViewHolder) holder).artistRecyclerItemBinding.setItem((Artist) item);
-                sharedImage = ((ArtistViewHolder) holder).artistRecyclerItemBinding.img;
                 break;
 
             case 2:
                 ((TrackViewHolder) holder).trackRecyclerItemBinding.setItem((Track) item);
-                sharedImage = ((TrackViewHolder) holder).trackRecyclerItemBinding.img;
                 break;
 
         }
 
-        ImageView finalSharedImage = sharedImage;
+
 
         holder.itemView.setOnClickListener(view -> {
-//            clickedLiveData.addSource(itemLiveData, o -> {
-//                clickedLiveData.setValue(o);
-//                clickedLiveData.removeSource(itemLiveData);
-//            });
-//            clickedLiveData.addSource(imageViewLiveData, o -> {
-//                clickedLiveData.setValue(o);
-//                clickedLiveData.removeSource(imageViewLiveData);
-//            });
-//            itemLiveData.postValue(item);
-//            imageViewLiveData.postValue(finalSharedImage);
-            baseItemObservable.onNext(item);
-            imageViewObservable.onNext(finalSharedImage);
+            selectedItem.postValue(item);
         });
 
     }
 
-    public Observable getItemOnclickSubject() {
-        val zipped = Observables.zip(currentSubject, maxSubject) { current, max -> "current : $current, max : $max " }
-        zipped.subscribe(
-                { Log.d("custom", it) },
-                { Log.d("custom", "BONGO!") },
-                { Log.d("custom", "KONGO!") }
-        )    }
+    public LiveData<BaseItem> getClickedItem() {
+        return selectedItem;
+    }
 
     @Override
     public int getItemViewType(int position) {

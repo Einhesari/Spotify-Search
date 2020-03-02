@@ -11,10 +11,10 @@ import javax.inject.Inject;
 
 public class AuthActivityViewModel extends ViewModel {
 
-    private com.example.spotifyapi.viewmodel.auth.AuthActivityRepository repository;
+    private AuthActivityRepository repository;
 
     @Inject
-    public AuthActivityViewModel(com.example.spotifyapi.viewmodel.auth.AuthActivityRepository repository) {
+    public AuthActivityViewModel(AuthActivityRepository repository) {
         this.repository = repository;
     }
 

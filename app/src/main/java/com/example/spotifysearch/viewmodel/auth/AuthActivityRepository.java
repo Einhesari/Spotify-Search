@@ -1,4 +1,4 @@
-package com.example.spotifyapi.viewmodel.auth;
+package com.example.spotifysearch.viewmodel.auth;
 
 import android.net.Uri;
 

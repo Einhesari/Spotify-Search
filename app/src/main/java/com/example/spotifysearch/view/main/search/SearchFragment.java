@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,38 +62,28 @@ public class SearchFragment extends DaggerFragment {
         searchItemDataAdapter = new SearchItemDataAdapter();
         rv_items.setAdapter(searchItemDataAdapter);
 
-        searchItemDataAdapter.getItemOnclickSubject().observe(getViewLifecycleOwner(), new Observer() {
+        searchItemDataAdapter.getClickedItem().observe(getViewLifecycleOwner(), new Observer<BaseItem>() {
             @Override
-            public void onChanged(Object o) {
-                if (o instanceof ImageView) {
+            public void onChanged(BaseItem item) {
 
-                }
-                if (o instanceof BaseItem) {
+                Bundle navBundel = new Bundle();
+                navBundel.putParcelable(getResources().getString(R.string.selected_item), item);
 
+
+                switch (item.getType()) {
+                    case "album":
+                        Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_albumDetailFragment, navBundel);
+                        break;
+
+                    case "track":
+                        Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_trackDetailFragment, navBundel);
+                        break;
+
+                    case "artist":
+                        Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_artistDetailFragment, navBundel);
+                        break;
                 }
             }
-        });
-        searchItemDataAdapter.getItemOnclickSubject().observe(getViewLifecycleOwner(), item -> {
-
-            Bundle navBundel = new Bundle();
-
-            switch (item.getType()) {
-                case "album":
-                    navBundel.putParcelable("selected_album", item);
-                    Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_albumDetailFragment, navBundel);
-                    break;
-
-                case "track":
-                    navBundel.putParcelable("selected_track", item);
-                    Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_trackDetailFragment, navBundel);
-                    break;
-
-                case "artist":
-                    navBundel.putParcelable("selected_artist", item);
-                    Navigation.findNavController(getActivity(), R.id.search_nav_host_fragment).navigate(R.id.action_searchFragment_to_artistDetailFragment, navBundel);
-                    break;
-            }
-
         });
 
         mainActivityViewModel.searchStateLiveData().observe(getViewLifecycleOwner(), searchState -> {

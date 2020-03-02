@@ -39,7 +39,7 @@ public class ArtistDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
-            artist = getArguments().getParcelable("selected_artist");
+            artist = getArguments().getParcelable(getResources().getString(R.string.selected_item));
             fragmentArtistDetailBinding.setItem(artist);
             fragmentArtistDetailBinding.setOnclick(this);
         }

@@ -17,9 +17,6 @@ import com.example.spotifysearch.databinding.FragmentTrackDetailBinding;
 import com.example.spotifysearch.model.item.Track;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TrackDetailFragment extends Fragment {
 
 
@@ -44,7 +41,7 @@ public class TrackDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
-            track = getArguments().getParcelable("selected_track");
+            track = getArguments().getParcelable(getResources().getString(R.string.selected_item));
             fragmentTrackDetailBinding.setItem(track);
             fragmentTrackDetailBinding.setOnclick(this);
         }

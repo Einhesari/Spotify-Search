@@ -25,7 +25,6 @@ public class AlbumDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -40,7 +39,7 @@ public class AlbumDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
-            album = getArguments().getParcelable("selected_album");
+            album = getArguments().getParcelable(getResources().getString(R.string.selected_item));
             fragmentAlbumDetailBinding.setItem(album);
             fragmentAlbumDetailBinding.setOnclick(this);
         }
