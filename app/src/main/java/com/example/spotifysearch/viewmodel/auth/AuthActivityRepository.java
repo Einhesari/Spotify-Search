@@ -67,5 +67,4 @@ public class AuthActivityRepository {
     public MutableLiveData<AuthResource> getState() {
         return authState;
     }
-
 }

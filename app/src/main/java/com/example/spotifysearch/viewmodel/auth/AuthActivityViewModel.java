@@ -35,4 +35,5 @@ public class AuthActivityViewModel extends ViewModel {
     public MutableLiveData<AuthResource> getAuthorizationStatus() {
         return repository.getState();
     }
+
 }

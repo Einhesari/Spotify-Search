@@ -1,6 +1,5 @@
 package com.example.spotifysearch.viewmodel.main.search;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -32,21 +31,16 @@ import retrofit2.Retrofit;
 public class SearchRepository {
 
     private ApiService apiService;
-    private Retrofit retrofit;
-    private Context context;
     public static final PublishSubject<String> textWathcerSubject = PublishSubject.create();
     private static final PublishSubject<String> searchQuerySubject = PublishSubject.create();
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<SearchResouces<ArrayList<BaseItem>>> searchStatus = new MutableLiveData<>();
 
     @Inject
-    public SearchRepository(Context context, ApiService apiService, Retrofit retrofit) {
-        this.context = context;
-        this.retrofit = retrofit;
+    public SearchRepository(ApiService apiService, Retrofit retrofit) {
         this.apiService = apiService;
         RetrofitBaseUrlModifier.Change(retrofit, Const.BASE_URL_API);
         sendSearchQuery();
-
     }
 
 
@@ -140,5 +134,4 @@ public class SearchRepository {
     public MutableLiveData<SearchResouces<ArrayList<BaseItem>>> getState() {
         return searchStatus;
     }
-
 }
